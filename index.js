@@ -23,4 +23,20 @@ const {
            console.log(err);
 
        }
+   };
+
+   const airdrop = async() => {
+       try{
+        const connection =  new Connection(clusterApiUrl("devnet"), "confirmed");
+        const wallet = await Keypair.fromSecretKey(privateKey);
+        const airdropSignature = await connection.requestAirdrop(
+            new PublicKey(wallet.publicKey),
+            2*LAMPORTS_PER_SOL
+        );
+        await connection.confirmTransaction(airdropSignature);
+
+       }
+       catch(err){
+            console.log(err);
+       }
    }
